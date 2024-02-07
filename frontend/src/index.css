@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.styled-checkbox {
+  /* Hide the default checkbox */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 2px solid #d9d9d9;
+  border-radius: 9999px; /* border color of checkbox */
+  background-color: #22223b; /* background color of checkbox */
+  border-radius: 4px; /* rounded corners */
+  outline: none; /* remove focus outline */
+  cursor: pointer; /* show pointer cursor on hover */
+
+  /* Position the checkmark */
+  position: relative;
+}
+
+.styled-checkbox:checked {
+  /* Change the background color when checked */
+  background-color: #22223b;
+}
+
+/* Style the checkmark */
+.styled-checkbox::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.6rem;
+  height: 1rem;
+  border-left: 2px solid #d9d9d9; /* color of the checkmark */
+  border-bottom: 2px solid #d9d9d9; /* color of the checkmark */
+  transform-origin: bottom left;
+  opacity: 0; /* hide the checkmark by default */
+}
+
+.styled-checkbox:checked::before {
+  /* Show the checkmark when checkbox is checked */
+  opacity: 1;
+}
