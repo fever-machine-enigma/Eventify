@@ -4,6 +4,7 @@ export default function Home() {
   return (
     <body className="bg-[#22223B] relative min-h-screen overflow-hidden">
       <img src={logobg} className="absolute right-0" />
+      <h1 className="text-5xl text-white">Hello</h1>
     </body>
   );
 }
