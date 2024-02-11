@@ -14,8 +14,8 @@ export default function Login() {
           className="flex flex-1 justify-between items-center "
         >
           <div className="flex flex-col gap-1">
-            <h1 className="text-6xl font-Inter font-semibold text-[#F2E9E4] tracking-tighter">
-              Log into your account
+            <h1 className="text-5xl font-Inter font-semibold text-[#F2E9E4] tracking-tighter">
+              আপনার অ্যাকাউন্টে লগ ইন করুন
             </h1>
             <h2 className="text-4xl font-Inter font-regular text-[#F2E9E4] tracking-tighter">
               Events, simplified at a glance.
