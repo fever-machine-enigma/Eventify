@@ -4,34 +4,55 @@
     "evtname": "Wildfire outbreak",
     "evttype": "Wildfire",
     "evtdesc": "Massive Wildfire Engulfs California Town, Residents Evacuate Amidst Blaze. In a devastating turn of events, a fierce wildfire has erupted in the heart of California, engulfing acres of land and threatening residential areas. Authorities have issued mandatory evacuation orders as flames rage uncontrollably, fueled by dry conditions and strong winds. The inferno, dubbed the California Blaze, erupted yesterday afternoon, quickly spreading across rugged terrain and devouring everything in its path. Firefighters are battling tirelessly to contain the blaze, but the unpredictable nature of the fire presents significant challenges. Local residents are fleeing their homes, seeking refuge in evacuation centers as smoke fills the sky and ash rains down on nearby communities. The fire has already destroyed several structures, with reports of widespread damage continuing to emerge. Emergency services are on high alert, coordinating evacuation efforts and deploying resources to combat the relentless flames. As the situation unfolds, authorities are urging residents to remain vigilant and heed evacuation orders to ensure their safety amidst this unprecedented wildfire crisis.",
-    "created": "2024-02-11T12:34:56.789Z"
+    "created": "2024-02-12T12:42:56.789Z"
   },
   {
     "id": 2,
     "evtname": "Shootout at Arizona",
     "evttype": "Shootout",
-    "evtdesc": "Massive Wildfire Engulfs California Town, Residents Evacuate Amidst Blaze. In a devastating turn of events, a fierce wildfire has erupted in the heart of California, engulfing acres of land and threatening residential areas. Authorities have issued mandatory evacuation orders as flames rage uncontrollably, fueled by dry conditions and strong winds. The inferno, dubbed the California Blaze, erupted yesterday afternoon, quickly spreading across rugged terrain and devouring everything in its path. Firefighters are battling tirelessly to contain the blaze, but the unpredictable nature of the fire presents significant challenges. Local residents are fleeing their homes, seeking refuge in evacuation centers as smoke fills the sky and ash rains down on nearby communities. The fire has already destroyed several structures, with reports of widespread damage continuing to emerge. Emergency services are on high alert, coordinating evacuation efforts and deploying resources to combat the relentless flames. As the situation unfolds, authorities are urging residents to remain vigilant and heed evacuation orders to ensure their safety amidst this unprecedented wildfire crisis.",
-    "created": "2024-02-10T12:34:56.789Z"
+    "evtdesc": "In a tragic incident in Arizona, a shootout erupted between rival gangs, sending shockwaves through the community. Authorities swiftly responded to the scene, where tensions ran high amidst the chaos. Witnesses reported hearing gunfire echoing through the streets as panic gripped bystanders. Emergency services rushed to the scene, treating the wounded and securing the area. The motive behind the shootout remains unclear, leaving residents on edge and demanding answers. Law enforcement agencies have launched a thorough investigation to apprehend those responsible and ensure justice prevails. The incident serves as a stark reminder of the ongoing challenges faced in combating gun violence across the nation.",
+    "created": "2024-02-11T12:34:56.789Z"
   },
   {
     "id": 3,
     "evtname": "Storm Surge Catastrophe",
     "evttype": "Storm Surge",
-    "evtdesc": "Massive Wildfire Engulfs California Town, Residents Evacuate Amidst Blaze. In a devastating turn of events, a fierce wildfire has erupted in the heart of California, engulfing acres of land and threatening residential areas. Authorities have issued mandatory evacuation orders as flames rage uncontrollably, fueled by dry conditions and strong winds. The inferno, dubbed the California Blaze, erupted yesterday afternoon, quickly spreading across rugged terrain and devouring everything in its path. Firefighters are battling tirelessly to contain the blaze, but the unpredictable nature of the fire presents significant challenges. Local residents are fleeing their homes, seeking refuge in evacuation centers as smoke fills the sky and ash rains down on nearby communities. The fire has already destroyed several structures, with reports of widespread damage continuing to emerge. Emergency services are on high alert, coordinating evacuation efforts and deploying resources to combat the relentless flames. As the situation unfolds, authorities are urging residents to remain vigilant and heed evacuation orders to ensure their safety amidst this unprecedented wildfire crisis.",
+    "evtdesc": "In the wake of a storm surge catastrophe, coastal communities are left reeling from the devastating impact of rising waters. Emergency responders rush to aid those affected, grappling with the widespread destruction and displaced families seeking shelter. The relentless force of nature underscores the urgent need for resilience and preparedness in vulnerable regions.",
     "created": "2024-02-08T12:34:56.789Z"
   },
   {
     "id": 4,
     "evtname": "Tornado Havoc WARNING",
     "evttype": "Tornado",
-    "evtdesc": "Massive Wildfire Engulfs California Town, Residents Evacuate Amidst Blaze. In a devastating turn of events, a fierce wildfire has erupted in the heart of California, engulfing acres of land and threatening residential areas. Authorities have issued mandatory evacuation orders as flames rage uncontrollably, fueled by dry conditions and strong winds. The inferno, dubbed the California Blaze, erupted yesterday afternoon, quickly spreading across rugged terrain and devouring everything in its path. Firefighters are battling tirelessly to contain the blaze, but the unpredictable nature of the fire presents significant challenges. Local residents are fleeing their homes, seeking refuge in evacuation centers as smoke fills the sky and ash rains down on nearby communities. The fire has already destroyed several structures, with reports of widespread damage continuing to emerge. Emergency services are on high alert, coordinating evacuation efforts and deploying resources to combat the relentless flames. As the situation unfolds, authorities are urging residents to remain vigilant and heed evacuation orders to ensure their safety amidst this unprecedented wildfire crisis.",
+    "evtdesc": "Amidst a tornado havoc warning, residents brace for the impending chaos as swirling winds threaten to unleash havoc. Emergency sirens blare, signaling the urgency for evacuation and seeking refuge in designated shelters. With homes torn asunder and debris scattered, communities unite in the face of adversity, emphasizing the importance of early warning systems and community resilience.",
     "created": "2024-02-07T12:34:56.789Z"
   },
   {
     "id": 5,
     "evtname": "Flood Disaster Emergency",
     "evttype": "Flood Disaster",
-    "evtdesc": "Massive Wildfire Engulfs California Town, Residents Evacuate Amidst Blaze. In a devastating turn of events, a fierce wildfire has erupted in the heart of California, engulfing acres of land and threatening residential areas. Authorities have issued mandatory evacuation orders as flames rage uncontrollably, fueled by dry conditions and strong winds. The inferno, dubbed the California Blaze, erupted yesterday afternoon, quickly spreading across rugged terrain and devouring everything in its path. Firefighters are battling tirelessly to contain the blaze, but the unpredictable nature of the fire presents significant challenges. Local residents are fleeing their homes, seeking refuge in evacuation centers as smoke fills the sky and ash rains down on nearby communities. The fire has already destroyed several structures, with reports of widespread damage continuing to emerge. Emergency services are on high alert, coordinating evacuation efforts and deploying resources to combat the relentless flames. As the situation unfolds, authorities are urging residents to remain vigilant and heed evacuation orders to ensure their safety amidst this unprecedented wildfire crisis.",
-    "created": "2024-02-06T12:34:56.789Z"
+    "evtdesc": "As floodwaters engulf communities, a flood disaster emergency unfolds, plunging neighborhoods into turmoil. Rescue teams navigate treacherous waters to reach stranded residents, while emergency shelters provide solace to the displaced. The inundation serves as a stark reminder of the unpredictable forces of nature and the critical need for robust disaster preparedness measures.",
+    "created": "2024-01-25T12:34:56.789Z"
+  },
+  {
+    "id": 6,
+    "evtname": "Lighting Strike",
+    "evttype": "Lightning Strike",
+    "evtdesc": "A sudden lightning strike jolts a tranquil landscape, igniting fires and prompting swift emergency responses. Firefighters battle the blaze amidst the crackling fury of thunderstorms, emphasizing the unpredictability of nature's wrath. The incident underscores the importance of vigilance and safety precautions during stormy conditions.",
+    "created": "2024-01-20T12:34:56.789Z"
+  },
+  {
+    "id": 7,
+    "evtname": "Terrorism at Daycare",
+    "evttype": "Terrorism",
+    "evtdesc": "In the aftermath of a terrorist attack, communities grapple with shock and grief as the specter of violence shatters the peace. Law enforcement agencies mobilize swiftly to apprehend perpetrators and secure affected areas, while communities rally in solidarity against acts of terror. The incident underscores the resilience of society in the face of adversity, fostering unity and resolve in its wake.",
+    "created": "2024-01-14T12:34:56.789Z"
+  },
+  {
+    "id": 8,
+    "evtname": "Tornado Emergency",
+    "evttype": "Tornado",
+    "evtdesc": "A tornado disaster strikes with devastating force, leaving a trail of destruction in its wake. Homes are reduced to rubble, and lives are forever altered as communities confront the aftermath. Emergency responders work tirelessly to provide aid and support to those affected, while the resilience of affected communities shines through in the face of adversity.",
+    "created": "2024-01-11T12:34:56.789Z"
   }
 ]
