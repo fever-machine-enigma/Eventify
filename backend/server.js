@@ -1,8 +1,6 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const fs = require("fs");
-const path = require("path");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const app = express();
 const PORT = 3500;
@@ -14,9 +12,21 @@ const corsOptions = {
 };
 
 // Middleware
-app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Database Connection
+const dbURL =
+  "mongodb+srv://shafin:dolareurotaka01@ghotona-chitro.s2agi0n.mongodb.net/?retryWrites=true&w=majority&appName=ghotona-chitro";
+mongoose
+  .connect(dbURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then((result) => app.listen(3000))
+  .catch((err) => console.log(err));
+
+// Routes
+app.get("/", (req, res) => {
+  res.send("Welcome to Ghotona-Chitro");
 });

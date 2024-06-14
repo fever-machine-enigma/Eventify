@@ -68,7 +68,7 @@ export default function Login() {
         </div>
         <footer>
           <p className="font-Inter text-md text-center font-regular text-[#F2E9E4] tracking-tight">
-            &copy; 2024 Eventify. All Rights Reserved
+            &copy; 2024 Ghotona Chitro. All Rights Reserved
           </p>
         </footer>
       </main>
