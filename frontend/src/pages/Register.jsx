@@ -9,17 +9,17 @@ const Register = () => {
       </section>
       <div
         id="register-container"
-        className="flex h-screen justify-center items-center gap-10"
+        className="flex h-screen justify-center items-center gap-10 "
       >
         <div
           id="register-box"
-          className="pt-16 pb-5 px-10 w-1/3 bg-[#D9D9D9] flex flex-col items-center gap-12 rounded-3xl"
+          className="pt-16 pb-5 px-10 w-1/3 bg-[#D9D9D9] flex flex-col items-center gap-12 rounded-3xl z-10"
         >
           <div className="flex flex-col gap-12 w-full">
             <input
               type="text"
               placeholder="First Name"
-              className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none active:outline-none hover:drop-shadow-[0_4px_5px_rgba(86, 141, 209, 0.8)]  tracking-tighter "
+              className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none hover:drop-shadow-[0_4px_5px_rgba(86, 141, 209, 0.8)]  tracking-tighter"
             />
             <input
               type="text"
@@ -61,7 +61,7 @@ const Register = () => {
             </label>
           </div>
           <Link
-            className="font-Inter bg-[#338364]  text-2xl w-1/2 text-[#F2E9E4] text-center p-3 rounded-full cursor-pointer"
+            className="font-Inter bg-[#338364]  text-2xl w-1/2 text-[#F2E9E4] text-center p-3 rounded-full cursor-pointer z-5"
             to={`home`}
           >
             Register

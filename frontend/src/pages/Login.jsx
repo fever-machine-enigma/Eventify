@@ -36,7 +36,7 @@ export default function Login() {
               <input
                 type="password"
                 placeholder="Password"
-                className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none active:bg-[#D9D9D9]  tracking-tighter"
+                className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none active:bg-[#D9D9D9] tracking-tighter"
               />
             </div>
             <label className="inline-flex items-center">
