@@ -1,9 +1,45 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { useState } from "react";
 
 import logoimg from "../assets/Logo-img.png";
 import logobg from "../assets/Logo-bg.png";
+import { Link } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 export default function Login() {
+  // const [formData, setFormData] = useState({
+  //   email: "",
+  //   pwd: "",
+  // });
+
+  // const handleInputChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
+  const { login, error } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [pwd, setPwd] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(email, pwd);
+    // try {
+    //   const data = {
+    //     email: formData.email,
+    //     pwd: formData.pwd,
+    //   };
+    //   const res = await fetch("http://localhost:3000/login", {
+    //     method: "POST",
+    //     body: JSON.stringify(data),
+    //     headers: { "Content-Type": "application/json" },
+    //   });
+    //   if (data) {
+    //     location.assign("home");
+    //   }
+    //   return res;
+    // } catch (err) {
+    //   console.log(err.message);
+    // }
+  };
+
   return (
     <body className="bg-[#22223B] relative min-h-screen overflow-hidden">
       <img src={logobg} alt="" className="absolute" />
@@ -23,21 +59,31 @@ export default function Login() {
               Events, simplified at a glance.
             </h2>
           </div>
-          <div
+          <form
             id="login-box "
-            className="pt-16 pb-5 px-10 w-1/3 bg-[#D9D9D9] flex flex-col items-center gap-12 rounded-3xl"
+            className="pt-16 pb-5 px-10 w-1/3 bg-[#D9D9D9] flex flex-col items-center gap-12 rounded-3xl z-10"
+            onSubmit={handleSubmit}
           >
             <div className="flex flex-col gap-12 w-full">
               <input
                 type="email"
+                name="email"
                 placeholder="Email Address"
                 className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none tracking-tighter"
+                onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 type="password"
+                name="pwd"
                 placeholder="Password"
                 className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none active:bg-[#D9D9D9] tracking-tighter"
+                onChange={(e) => setPwd(e.target.value)}
               />
+              {error && (
+                <p className="text-red-600 text-xl font-Inter tracking-tight">
+                  {error}
+                </p>
+              )}
             </div>
             <label className="inline-flex items-center">
               <input
@@ -49,22 +95,22 @@ export default function Login() {
               </span>
             </label>
 
-            <Link
+            <button
               className="font-Inter bg-[#4A4E69] text-2xl w-1/2 text-[#F2E9E4] text-center p-3 rounded-full cursor-pointer"
-              to={`home`}
+              type="submit"
             >
               Login
-            </Link>
+            </button>
 
             <p className="tracking-tight text-lg">
               <span className="font-Inter text-[#22223B]/60">
                 Don't have an account?
               </span>{" "}
-              <a href="#" className="font-bold font-Inter">
+              <Link to="/register" className="font-bold font-Inter">
                 Sign Up
-              </a>
+              </Link>
             </p>
-          </div>
+          </form>
         </div>
         <footer>
           <p className="font-Inter text-md text-center font-regular text-[#F2E9E4] tracking-tight">

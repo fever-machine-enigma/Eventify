@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const PORT = 3500;
@@ -15,6 +16,7 @@ const corsOptions = {
 // Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 
 // Database Connection
 const dbURL =

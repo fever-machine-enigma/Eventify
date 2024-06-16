@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { format, isToday, isYesterday, differenceInDays } from "date-fns";
+import { AuthContext } from "../context/AuthContext";
 
 import logoimg from "../assets/Logo-img.png";
 import archiveimg from "../assets/archive.svg";
@@ -7,7 +8,7 @@ import addbtn from "../assets/Add_ring_fill.svg";
 import eventsDB from "../../db/events.json";
 import Event from "./Event";
 
-export default function Sidebar() {
+export default function Sidebar({ firstName, lastName }) {
   const [events, setEvents] = useState([]);
   const [selected, setSelected] = useState(null);
   const [userDesc, setUserDesc] = useState([]);
@@ -112,8 +113,8 @@ export default function Sidebar() {
   };
 
   return (
-    <main className="min-h-screen flex gap-80">
-      <div className="bg-[#23202C] w-1/5">
+    <main className="min-h-screen flex">
+      <div className="bg-[#23202C] w-1/6">
         <div className="flex flex-col justify-end overflow-hidden items-center">
           <div className="flex flex-col items-center gap-2">
             <div className="w-3/4">
@@ -131,8 +132,13 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-      <div className="w-4/5">
-        <Event userDesc={userDesc} eventType={eventType} />
+      <div className="w-5/6">
+        <Event
+          userDesc={userDesc}
+          eventType={eventType}
+          firstName={firstName}
+          lastName={lastName}
+        />
       </div>
     </main>
   );

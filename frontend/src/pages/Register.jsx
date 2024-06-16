@@ -1,7 +1,50 @@
 import logobg from "../assets/Logo-bg-right.png";
 import logoimg from "../assets/Logo-img.png";
-import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { useState, useContext } from "react";
 const Register = () => {
+  // const [formData, setFormData] = useState({
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   pwd: "",
+  // });
+
+  // const [errMsg, setErrMsg] = useState(null);
+
+  // const handleInputChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
+  const { register, error } = useContext(AuthContext);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [pwd, setPwd] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await register(firstName, lastName, email, pwd);
+    // try {
+    //   const data = {
+    //     firstName: formData.firstName,
+    //     lastName: formData.lastName,
+    //     email: formData.email,
+    //     pwd: formData.pwd,
+    //   };
+    //   const res = await fetch("http://localhost:3000/register", {
+    //     method: "POST",
+    //     body: JSON.stringify(data),
+    //     headers: { "Content-Type": "application/json" },
+    //   });
+    //   if (data) {
+    //     location.assign("home");
+    //   }
+    //   return res;
+    // } catch (err) {
+    //   setErrMsg(err);
+    // }
+  };
+
   return (
     <body className="bg-[#22223B] relative min-h-screen overflow-hidden">
       <section className="flex justify-end">
@@ -11,30 +54,59 @@ const Register = () => {
         id="register-container"
         className="flex h-screen justify-center items-center gap-10 "
       >
-        <div
+        <form
           id="register-box"
           className="pt-16 pb-5 px-10 w-1/3 bg-[#D9D9D9] flex flex-col items-center gap-12 rounded-3xl z-10"
+          onSubmit={handleSubmit}
         >
-          <div className="flex flex-col gap-12 w-full">
+          <div className="flex flex-col gap-10 w-full">
             <input
               type="text"
+              name="firstName"
               placeholder="First Name"
               className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none hover:drop-shadow-[0_4px_5px_rgba(86, 141, 209, 0.8)]  tracking-tighter"
+              required
+              onChange={(e) => {
+                setFirstName(e.target.value);
+              }}
             />
             <input
               type="text"
+              name="lastName"
               placeholder="Last Name"
               className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none tracking-tighter"
+              required
+              onChange={(e) => {
+                setLastName(e.target.value);
+              }}
             />
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223b] font-Inter text-2xl p-1 focus:outline-none tracking-tighter invalid:border-[rgba(255,27,27,0.8)] invalid:border-b-[3px]"
-            />
+            <div className="">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223b] font-Inter text-2xl p-1 focus:outline-none tracking-tighter invalid:border-[rgba(255,27,27,0.8)] invalid:border-b-[3px] w-full"
+                required
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              {error && (
+                <h1 className="font-Inter text-red-600 text-xl p-2 ">
+                  {error}
+                </h1>
+              )}
+            </div>
+
             <input
               type="password"
+              name="pwd"
               placeholder="Password"
               className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none active:bg-[#D9D9D9]  tracking-tighter"
+              required
+              onChange={(e) => {
+                setPwd(e.target.value);
+              }}
             />
             <input
               type="password"
@@ -60,13 +132,13 @@ const Register = () => {
               </span>
             </label>
           </div>
-          <Link
+          <button
             className="font-Inter bg-[#338364]  text-2xl w-1/2 text-[#F2E9E4] text-center p-3 rounded-full cursor-pointer z-5"
-            to={`home`}
+            type="submit"
           >
             Register
-          </Link>
-        </div>
+          </button>
+        </form>
         <div className="flex flex-col justify-evenly h-full w-1/3">
           <div className="">
             <img src={logoimg} className="" />
