@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { format, isToday, isYesterday, differenceInDays } from "date-fns";
-import { AuthContext } from "../context/AuthContext";
 
 import logoimg from "../assets/Logo-img.png";
 import archiveimg from "../assets/archive.svg";
@@ -113,7 +112,7 @@ export default function Sidebar({ firstName, lastName }) {
   };
 
   return (
-    <main className="min-h-screen flex">
+    <main className="min-h-screen flex w-full gap-80">
       <div className="bg-[#23202C] w-1/6">
         <div className="flex flex-col justify-end overflow-hidden items-center">
           <div className="flex flex-col items-center gap-2">

@@ -1,12 +1,12 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
-import Home from "../pages/Home";
+import Login from "../pages/Login";
 
-const PrivateRoute = () => {
+const PublicRoute = ({ children }) => {
   const { user } = useAuthContext();
 
-  return user ? <Home /> : <Navigate to="/login" />;
+  return user ? <Navigate to="home" /> : children;
 };
 
-export default PrivateRoute;
+export default PublicRoute;

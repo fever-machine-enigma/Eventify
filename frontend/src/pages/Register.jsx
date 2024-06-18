@@ -1,21 +1,10 @@
 import logobg from "../assets/Logo-bg-right.png";
 import logoimg from "../assets/Logo-img.png";
-import { AuthContext } from "../context/AuthContext";
-import { useState, useContext } from "react";
+import { useState } from "react";
+import { useRegister } from "../hooks/useRegister";
+
 const Register = () => {
-  // const [formData, setFormData] = useState({
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   pwd: "",
-  // });
-
-  // const [errMsg, setErrMsg] = useState(null);
-
-  // const handleInputChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
-  const { register, error } = useContext(AuthContext);
+  const { register, error, isLoading } = useRegister();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,25 +13,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await register(firstName, lastName, email, pwd);
-    // try {
-    //   const data = {
-    //     firstName: formData.firstName,
-    //     lastName: formData.lastName,
-    //     email: formData.email,
-    //     pwd: formData.pwd,
-    //   };
-    //   const res = await fetch("http://localhost:3000/register", {
-    //     method: "POST",
-    //     body: JSON.stringify(data),
-    //     headers: { "Content-Type": "application/json" },
-    //   });
-    //   if (data) {
-    //     location.assign("home");
-    //   }
-    //   return res;
-    // } catch (err) {
-    //   setErrMsg(err);
-    // }
   };
 
   return (
@@ -92,9 +62,9 @@ const Register = () => {
                 }}
               />
               {error && (
-                <h1 className="font-Inter text-red-600 text-xl p-2 ">
+                <p className="text-red-600 text-xl font-Inter tracking-tight border-2 border-red-400/30 p-4 bg-red-400/30 ">
                   {error}
-                </h1>
+                </p>
               )}
             </div>
 
@@ -135,6 +105,7 @@ const Register = () => {
           <button
             className="font-Inter bg-[#338364]  text-2xl w-1/2 text-[#F2E9E4] text-center p-3 rounded-full cursor-pointer z-5"
             type="submit"
+            disabled={isLoading}
           >
             Register
           </button>

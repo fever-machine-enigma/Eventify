@@ -1,43 +1,21 @@
-import { useContext } from "react";
 import { useState } from "react";
 
 import logoimg from "../assets/Logo-img.png";
 import logobg from "../assets/Logo-bg.png";
-import { Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useLogin } from "../hooks/useLogin";
 
 export default function Login() {
-  // const [formData, setFormData] = useState({
-  //   email: "",
-  //   pwd: "",
-  // });
-
-  // const handleInputChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
-  const { login, error } = useContext(AuthContext);
+  const { login, error, isLoading } = useLogin();
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, pwd);
-    // try {
-    //   const data = {
-    //     email: formData.email,
-    //     pwd: formData.pwd,
-    //   };
-    //   const res = await fetch("http://localhost:3000/login", {
-    //     method: "POST",
-    //     body: JSON.stringify(data),
-    //     headers: { "Content-Type": "application/json" },
-    //   });
-    //   if (data) {
-    //     location.assign("home");
-    //   }
-    //   return res;
-    // } catch (err) {
-    //   console.log(err.message);
-    // }
+    const success = await login(email, pwd);
+    if (success) {
+      navigate("/home");
+    }
   };
 
   return (
@@ -80,7 +58,7 @@ export default function Login() {
                 onChange={(e) => setPwd(e.target.value)}
               />
               {error && (
-                <p className="text-red-600 text-xl font-Inter tracking-tight">
+                <p className="text-red-600 text-xl font-Inter tracking-tight border-2 border-red-400/30 p-4 bg-red-400/30 ">
                   {error}
                 </p>
               )}
@@ -98,8 +76,9 @@ export default function Login() {
             <button
               className="font-Inter bg-[#4A4E69] text-2xl w-1/2 text-[#F2E9E4] text-center p-3 rounded-full cursor-pointer"
               type="submit"
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? "loading..." : "Login"}
             </button>
 
             <p className="tracking-tight text-lg">

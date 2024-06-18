@@ -7,6 +7,5 @@ const router = Router();
 router.post("/register", authController.post_register);
 router.post("/login", authController.post_login);
 router.get("/home", requireAuth);
-router.post("/eventlog".logController.get_log);
 
 module.exports = router;
