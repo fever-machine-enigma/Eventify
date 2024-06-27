@@ -8,12 +8,11 @@ import { useLogin } from "../hooks/useLogin";
 export default function Login() {
   const { login, error, isLoading } = useLogin();
   const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await login(email, pwd);
-    if (success) {
+    if (await login(email, password)) {
       navigate("/home");
     }
   };
@@ -52,10 +51,10 @@ export default function Login() {
               />
               <input
                 type="password"
-                name="pwd"
+                name="password"
                 placeholder="Password"
                 className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none active:bg-[#D9D9D9] tracking-tighter"
-                onChange={(e) => setPwd(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
               {error && (
                 <p className="text-red-600 text-xl font-Inter tracking-tight border-2 border-red-400/30 p-4 bg-red-400/30 ">

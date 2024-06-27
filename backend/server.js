@@ -34,3 +34,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to Ghotona-Chitro");
 });
 app.use(authRoutes);
+app.post("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logged out successfully" });
+});

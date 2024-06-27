@@ -33,7 +33,7 @@ const handleErrors = (err) => {
   return errors;
 };
 
-const maxAge = 60 * 60;
+const maxAge = 24 * 60 * 60;
 
 const createToken = (id) => {
   return jwt.sign({ id }, "ghotona-chitro bangladesh", {
@@ -47,7 +47,7 @@ module.exports.post_register = async (req, res) => {
   try {
     const user = await User.create({ firstName, lastName, email, pwd });
     const token = createToken(user._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 }); // Keep httpOnly: true for security
+    res.cookie("token", token, { httpOnly: true, maxAge: maxAge * 1000 }); // Keep httpOnly: false for security
     res.status(201).json({ token, user: user._id });
   } catch (err) {
     const errors = handleErrors(err);
@@ -61,7 +61,7 @@ module.exports.post_login = async (req, res) => {
   try {
     const user = await User.login(email, pwd);
     const token = createToken(user._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.cookie("token", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).json({
       token,
       user: user._id,

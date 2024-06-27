@@ -5,6 +5,7 @@ import App from "./App";
 import "./index.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Missing from "./pages/Missing";
 import { AuthContextProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
@@ -25,11 +26,19 @@ const router = createBrowserRouter([
   },
   {
     path: "login",
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
   },
   {
     path: "register",
     element: <Register />,
+  },
+  {
+    path: "*",
+    element: <Missing />,
   },
 ]);
 

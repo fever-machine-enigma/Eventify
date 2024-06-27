@@ -2,17 +2,29 @@ import logobg from "../assets/Logo-bg-right.png";
 import logoimg from "../assets/Logo-img.png";
 import { useState } from "react";
 import { useRegister } from "../hooks/useRegister";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { register, error, isLoading } = useRegister();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [first_name, setFirst_name] = useState("");
+  const [last_name, setLast_name] = useState("");
   const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
-
+  const [password, setPassword] = useState("");
+  const [confirm_password, setConfirm_password] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await register(firstName, lastName, email, pwd);
+
+    const success = await register(
+      first_name,
+      last_name,
+      email,
+      password,
+      confirm_password
+    );
+    if (success) {
+      navigate("/home");
+    }
   };
 
   return (
@@ -32,22 +44,22 @@ const Register = () => {
           <div className="flex flex-col gap-10 w-full">
             <input
               type="text"
-              name="firstName"
+              name="first_name"
               placeholder="First Name"
               className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none hover:drop-shadow-[0_4px_5px_rgba(86, 141, 209, 0.8)]  tracking-tighter"
               required
               onChange={(e) => {
-                setFirstName(e.target.value);
+                setFirst_name(e.target.value);
               }}
             />
             <input
               type="text"
-              name="lastName"
+              name="last_name"
               placeholder="Last Name"
               className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none tracking-tighter"
               required
               onChange={(e) => {
-                setLastName(e.target.value);
+                setLast_name(e.target.value);
               }}
             />
             <div className="">
@@ -61,28 +73,32 @@ const Register = () => {
                   setEmail(e.target.value);
                 }}
               />
-              {error && (
-                <p className="text-red-600 text-xl font-Inter tracking-tight border-2 border-red-400/30 p-4 bg-red-400/30 ">
-                  {error}
-                </p>
-              )}
             </div>
 
             <input
               type="password"
-              name="pwd"
+              name="password"
               placeholder="Password"
               className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none active:bg-[#D9D9D9]  tracking-tighter"
               required
               onChange={(e) => {
-                setPwd(e.target.value);
+                setPassword(e.target.value);
               }}
             />
             <input
               type="password"
+              name="confirm_password"
               placeholder="Confirm Password"
               className="bg-[#D9D9D9] border-b-[1.5px] border-[#22223B] font-Inter text-2xl p-1 focus:outline-none active:bg-[#D9D9D9]  tracking-tighter"
+              onChange={(e) => {
+                setConfirm_password(e.target.value);
+              }}
             />
+            {error && (
+              <p className="text-red-600 text-xl font-Inter tracking-tight border-2 border-red-400/30 p-4 bg-red-400/30 ">
+                {error}
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-4">
             <label className="inline-flex">
@@ -103,7 +119,7 @@ const Register = () => {
             </label>
           </div>
           <button
-            className="font-Inter bg-[#338364]  text-2xl w-1/2 text-[#F2E9E4] text-center p-3 rounded-full cursor-pointer z-5"
+            className="font-Inter bg-[#338364]  text-2xl w-1/2 text-[#F2E9E4] text-center p-3 rounded-full cursor-pointer z-5 disabled:bg-gray-700"
             type="submit"
             disabled={isLoading}
           >
