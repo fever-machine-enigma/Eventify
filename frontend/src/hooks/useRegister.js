@@ -36,7 +36,10 @@ export const useRegister = () => {
 
     if (response.status === 201) {
       // save user token to local storage
-      localStorage.setItem("token", JSON.stringify(response.token));
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("first_name", data.first_name);
+      localStorage.setItem("last_name", data.last_name);
+      localStorage.setItem("user_id", data.user_id);
       // update auth context
       dispatch({ type: "LOGIN", payload: response.token });
       setIsLoading(false);

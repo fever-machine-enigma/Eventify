@@ -2,7 +2,7 @@ import logobg from "../assets/Logo-bg-right.png";
 import logoimg from "../assets/Logo-img.png";
 import { useState } from "react";
 import { useRegister } from "../hooks/useRegister";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const { register, error, isLoading } = useRegister();
@@ -23,14 +23,16 @@ const Register = () => {
       confirm_password
     );
     if (success) {
-      navigate("/home");
+      navigate("/login");
     }
   };
 
   return (
     <body className="bg-[#22223B] relative min-h-screen overflow-hidden">
       <section className="flex justify-end">
-        <img src={logobg} alt="" className="absolute" />
+        <Link to={"/"}>
+          <img src={logobg} alt="" className="absolute" />
+        </Link>
       </section>
       <div
         id="register-container"

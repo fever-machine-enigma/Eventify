@@ -20,9 +20,12 @@ export default function Login() {
   return (
     <body className="bg-[#22223B] relative min-h-screen overflow-hidden">
       <img src={logobg} alt="" className="absolute" />
+
       <main className="pb-4 pt-12 px-60 min-h-screen flex flex-col justify-center">
         <div id="logo" className="">
-          <img src={logoimg} alt="logo" className="w-1/6" />
+          <Link to={"/"}>
+            <img src={logoimg} alt="logo" className="w-1/6 z-10" />
+          </Link>
         </div>
         <div
           id="login-container"

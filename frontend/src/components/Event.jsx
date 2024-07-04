@@ -31,6 +31,8 @@ export default function Event() {
   const [inputDisplay, setInputDisplay] = useState(null);
   const [outputText, setOutputText] = useState(null);
   const [outputDisplay, setOutputDisplay] = useState(null);
+  const [summary, setSummary] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
 
   const signout = () => {
     const success = logout();
@@ -41,16 +43,25 @@ export default function Event() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setInputDisplay(inputText);
+    setOutputDisplay(null);
+    setSummary(null);
+    setIsLoading(true);
 
     const input = inputText;
-    const response = await axios.post(`${API_URL}/predict`, {
-      input,
-    });
+    try {
+      const response = await axios.post(`${API_URL}/predict`, {
+        input,
+      });
 
-    const data = response.data.result;
-    console.log(data);
-    setOutputDisplay(data);
+      const data = response.data;
+      setOutputDisplay(data.result);
+      setSummary(data.summary);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -72,7 +83,7 @@ export default function Event() {
                 </div>
               </div>
             )}
-            {outputDisplay && (
+            {outputDisplay ? (
               <div className="flex flex-col gap-4">
                 <div className="flex gap-4 items-center">
                   <img src={logo} className="w-10 h-10 rounded-full" />
@@ -85,8 +96,34 @@ export default function Event() {
                     <span className="font-bold">Event : </span>
                     {outputDisplay}
                   </p>
+                  <p className="font-Inter text-[#f2e9e4] flex gap-2">
+                    <span className="font-bold">Summary : </span>
+                    {summary &&
+                      summary.map((item, index) => (
+                        <p key={index}>{item.summary_text}</p>
+                      ))}
+                  </p>
                 </div>
               </div>
+            ) : (
+              isLoading && (
+                <div className="flex flex-col gap-4">
+                  <div className="flex gap-4 items-center">
+                    <img src={logo} className="w-10 h-10 rounded-full" />
+                    <h4 className="text-lg text-[#f2e9e4] font-Inter">
+                      Ghotona Chitro
+                    </h4>
+                  </div>
+                  <div className="ml-10">
+                    <div class="flex space-x-2 justify-center items-center w-20 h-20dark:invert">
+                      <span class="sr-only">Loading...</span>
+                      <div class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                      <div class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                      <div class="h-2 w-2 bg-white rounded-full animate-bounce"></div>
+                    </div>
+                  </div>
+                </div>
+              )
             )}
           </div>
 
