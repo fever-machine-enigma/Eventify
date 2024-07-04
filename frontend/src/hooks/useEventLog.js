@@ -12,29 +12,29 @@ export const useEventLog = () => {
   const fetchLog = async () => {
     setIsLoading(true);
     setError(null);
-    const response = await axios.post(
-      `${API_URL}/fetch-log`,
-      {
-        user_id,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    try {
+      const response = await axios.post(
+        `${API_URL}/fetch-log`,
+        { user_id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const formattedData = [...response.data];
+      if (response.status === 401 || response.status === 404) {
+        setError(response.data.error);
+        return [];
       }
-    );
 
-    const data = await response.data;
-    console.log(data);
-    if (response.status === 401 || response.status === 404) {
-      setIsLoading(true);
-      setError(data.error);
-      return data;
-    }
-
-    if (response.status === 201) {
+      return formattedData;
+    } catch (error) {
+      setError(error.response ? error.response.data.error : error.message);
+      return [];
+    } finally {
       setIsLoading(false);
-      return data;
     }
   };
 

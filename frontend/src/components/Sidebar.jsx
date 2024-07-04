@@ -1,114 +1,65 @@
 import { useEffect, useState } from "react";
-import { format, isToday, isYesterday, differenceInDays } from "date-fns";
 
 import logoimg from "../assets/Logo-img.png";
 import archiveimg from "../assets/archive.svg";
 import addbtn from "../assets/Add_ring_fill.svg";
 import Event from "./Event";
 import { useEventLog } from "../hooks/useEventLog";
+import moment from "moment";
 
 export default function Sidebar() {
-  const [events, setEvents] = useState([]);
+  const [groupedEntries, setGroupedEntries] = useState({
+    today: [],
+    yesterday: [],
+    last7Days: [],
+    last30Days: [],
+  });
   const [selected, setSelected] = useState(null);
   const { fetchLog } = useEventLog();
 
   useEffect(() => {
-    const events = fetchLog();
-    setEvents(events);
+    const response = fetchLog();
+    response.then((data) => {
+      if (Array.isArray(data)) {
+        const grouped = groupEntriesByDate(data);
+        setGroupedEntries(grouped);
+      } else {
+        console.error("Fetched data is not an array", data);
+      }
+    });
   }, []);
 
-  const selectDesc = (event) => {
-    setUserDesc(event);
-  };
-  const selectType = (event) => {
-    setEventType(event);
-  };
+  const groupEntriesByDate = (entries) => {
+    const today = moment().startOf("day");
+    const yesterday = moment().subtract(1, "days").startOf("day");
+    const last7Days = moment().subtract(7, "days").startOf("day");
+    const last30Days = moment().subtract(30, "days").startOf("day");
 
-  const groupItemsByTime = () => {
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    const lastWeek = new Date(today);
-    lastWeek.setDate(today.getDate() - 7);
-    const lastMonth = new Date(today);
-    lastMonth.setDate(today.getDate() - 31);
-
-    const groupedItems = {
-      Today: [],
-      Yesterday: [],
-      "Last Week": [],
-      "Last Month": [],
+    const groupedEntries = {
+      today: [],
+      yesterday: [],
+      last7Days: [],
+      last30Days: [],
     };
 
-    events.forEach((event) => {
-      const createdAt = new Date(event.created);
-      if (isToday(createdAt)) {
-        groupedItems["Today"].push(event);
-      } else if (isYesterday(createdAt)) {
-        groupedItems["Yesterday"].push(event);
-      } else if (differenceInDays(today, createdAt) <= 7) {
-        groupedItems["Last Week"].push(event);
-      } else if (differenceInDays(today, createdAt) <= 31) {
-        groupedItems["Last Month"].push(event);
+    entries.forEach((entry) => {
+      const createdDate = moment(entry.created);
+
+      if (createdDate.isSame(today, "d")) {
+        groupedEntries.today.push(entry);
+      } else if (createdDate.isSame(yesterday, "d")) {
+        groupedEntries.yesterday.push(entry);
+      } else if (createdDate.isAfter(last7Days)) {
+        groupedEntries.last7Days.push(entry);
+      } else if (createdDate.isAfter(last30Days)) {
+        groupedEntries.last30Days.push(entry);
       }
     });
 
-    return groupedItems;
+    return groupedEntries;
   };
-
   const selectEvent = (event) => {
     setSelected(event);
-  };
-
-  const truncatedTab = ({ text, maxLength }) => {
-    if (text.length > maxLength) {
-      return text.slice(0, maxLength) + "...";
-    } else {
-      return text;
-    }
-  };
-
-  const displayEventsByTime = () => {
-    const groupedItems = groupItemsByTime();
-
-    return Object.entries(groupedItems).map(([time, events]) => {
-      return (
-        <div key={time} className="">
-          <h3 className="text-[#F2E9E4] text-md font-Inter ml-4 mt-2">
-            {time}
-          </h3>
-          <ul>
-            {events.map((event, index) => (
-              <li
-                key={index}
-                className={`event ${
-                  selected === event
-                    ? "my-2 ml-2 w-85% bg-[#2E2E45] text-[#f2e9e4] text-lg rounded-full flex tracking-tighter"
-                    : "my-2 ml-2 w-85% text-[#F2E9E4] tracking-tighter"
-                }`}
-                onClick={() => {
-                  selectEvent(event);
-                  selectDesc(event);
-                  selectType(event);
-                }}
-              >
-                <div className="text-lg  font-medium font-Inter w-full rounded-full px-4 py-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#2E2E45] hover:text-[#f2e9e4] transition duration-200 ease-in-out truncate">
-                  {event.evtname}
-                  <button
-                    className={`${selected === event ? "block" : "hidden"}`}
-                  >
-                    <img
-                      src={archiveimg}
-                      className="rounded-full w-6 h-6 text-white"
-                    />
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    });
   };
 
   return (
@@ -120,7 +71,51 @@ export default function Sidebar() {
               <img src={logoimg} className="" />
             </div>
             <hr className="w-5/6" />
-            <div className="w-full tracking-tighter">{displayEventsByTime}</div>
+            <div className="w-full text-white font-Inter tracking-tighter ml-10">
+              {
+                <div className="w-5/6 flex flex-col gap-2">
+                  <h2>Today</h2>
+                  {groupedEntries.today.map((entry) => (
+                    <div
+                      key={entry.created}
+                      className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#2E2E45] hover:text-[#f2e9e4] transition duration-200 ease-in-out"
+                    >
+                      {entry.title}
+                    </div>
+                  ))}
+
+                  <h2>Yesterday</h2>
+                  {groupedEntries.yesterday.map((entry) => (
+                    <div
+                      key={entry.created}
+                      className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#2E2E45] hover:text-[#f2e9e4] transition duration-200 ease-in-out"
+                    >
+                      {entry.title}
+                    </div>
+                  ))}
+
+                  <h2>Last 7 Days</h2>
+                  {groupedEntries.last7Days.map((entry) => (
+                    <div
+                      key={entry.created}
+                      className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#2E2E45] hover:text-[#f2e9e4] transition duration-200 ease-in-out"
+                    >
+                      {entry.title}
+                    </div>
+                  ))}
+
+                  <h2>Last 30 Days</h2>
+                  {groupedEntries.last30Days.map((entry) => (
+                    <div
+                      key={entry.created}
+                      className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#2E2E45] hover:text-[#f2e9e4] transition duration-200 ease-in-out"
+                    >
+                      {entry.title}
+                    </div>
+                  ))}
+                </div>
+              }
+            </div>
           </div>
 
           <div className="w-5/6 flex flex-col gap-4 mb-4">

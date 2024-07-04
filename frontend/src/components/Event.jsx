@@ -19,14 +19,19 @@ import logo from "../assets/Logo.svg";
 import arrowup from "../assets/arrow.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const API_URL = "http://localhost:5000";
 
 export default function Event() {
   const { logout } = useLogout();
-  const [input, setInput] = useState("");
-  const [display, setDisplay] = useState("");
-  const [outputEvent, setOutputEvent] = useState("");
-  const [outputSum, setOutputSum] = useState(null);
   const navigate = useNavigate();
+
+  const [inputText, setInputText] = useState(null);
+  const [inputDisplay, setInputDisplay] = useState(null);
+  const [outputText, setOutputText] = useState(null);
+  const [outputDisplay, setOutputDisplay] = useState(null);
+
   const signout = () => {
     const success = logout();
     if (success) {
@@ -34,15 +39,18 @@ export default function Event() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (input) {
-      setDisplay(input);
-      setOutputEvent("হত্যা");
-      setOutputSum(
-        "গাজীপুরে ছেলে হত্যার বিচার চাইতে গিয়ে প্রতিপক্ষের মারধরে পোশাকশ্রমিক আসাদুল ইসলাম নিহত হয়েছেন। বুধবার দুপুরে স্থানীয় আলমগীর হোসেনের বাড়ির উঠানে এ ঘটনা ঘটে। পুলিশ ঘটনার তদন্ত করছে এবং আইনি ব্যবস্থা গ্রহণের প্রক্রিয়া চলছে।"
-      );
-    }
+    setInputDisplay(inputText);
+
+    const input = inputText;
+    const response = await axios.post(`${API_URL}/predict`, {
+      input,
+    });
+
+    const data = response.data.result;
+    console.log(data);
+    setOutputDisplay(data);
   };
 
   return (
@@ -51,18 +59,20 @@ export default function Event() {
         <div className="flex justify-center"></div>
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-4">
-            {input != "" && (
+            {inputDisplay && (
               <div className="flex flex-col gap-4">
                 <div className="flex gap-4 items-center">
                   <img src={profileimg} className="w-10 h-10 rounded-full" />
                   <h4 className="text-lg text-[#f2e9e4] font-Inter">You</h4>
                 </div>
                 <div>
-                  <p className="font-Inter text-[#f2e9e4] ml-14">{display}</p>
+                  <p className="font-Inter text-[#f2e9e4] ml-14">
+                    {inputDisplay}
+                  </p>
                 </div>
               </div>
             )}
-            {outputEvent && (
+            {outputDisplay && (
               <div className="flex flex-col gap-4">
                 <div className="flex gap-4 items-center">
                   <img src={logo} className="w-10 h-10 rounded-full" />
@@ -73,11 +83,7 @@ export default function Event() {
                 <div className="flex flex-col gap-4 ml-14">
                   <p className="font-Inter text-[#f2e9e4]">
                     <span className="font-bold">Event : </span>
-                    {outputEvent}
-                  </p>
-                  <p className="font-Inter text-[#f2e9e4]">
-                    <span className="font-bold">Summary : </span>
-                    {outputSum}
+                    {outputDisplay}
                   </p>
                 </div>
               </div>
@@ -90,7 +96,7 @@ export default function Event() {
                 type="text"
                 placeholder="Enter your news here...."
                 className="w-full p-6 rounded-full bg-black/0 ring-2 ring-[#f2e9e4] text-[#f2e9e4] font-Inter tracking-tight"
-                onChange={(e) => setInput(e.target.value)}
+                onChange={(e) => setInputText(e.target.value)}
               />
               <button
                 className="absolute right-1 bottom-1 bg-[#f2e9e4] hover:bg-[#dad1cd] rounded-full h-16 w-16 flex items-center justify-center"
