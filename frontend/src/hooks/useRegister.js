@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://ghotona-api.onrender.com";
 
 export const useRegister = () => {
   const [error, setError] = useState(null);

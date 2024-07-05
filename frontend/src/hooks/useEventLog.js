@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://ghotona-api.onrender.com";
 
 export const useEventLog = () => {
   const [error, setError] = useState(null);

@@ -25,7 +25,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://ghotona-api.onrender.com";
 
 export default function Event() {
   const { logout } = useLogout();
