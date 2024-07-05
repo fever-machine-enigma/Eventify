@@ -16,6 +16,10 @@ import { useLogout } from "../hooks/useLogout";
 
 import profileimg from "../assets/download.jpg";
 import logo from "../assets/Logo.svg";
+import check from "../assets/Check_fill.svg";
+import search from "../assets/File_dock_search_fill.svg";
+import copy from "../assets/Copy.svg";
+import question from "../assets/Question.svg";
 import arrowup from "../assets/arrow.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -33,6 +37,7 @@ export default function Event() {
   const [outputDisplay, setOutputDisplay] = useState(null);
   const [summary, setSummary] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  const [intro, setIntro] = useState(true);
 
   const signout = () => {
     const success = logout();
@@ -44,6 +49,7 @@ export default function Event() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIntro(false);
     setInputDisplay(inputText);
     setOutputDisplay(null);
     setSummary(null);
@@ -67,7 +73,32 @@ export default function Event() {
   return (
     <main className="w-full flex">
       <section className="w-4/5 h-screen flex flex-col justify-between gap-20">
-        <div className="flex justify-center"></div>
+        <div className=""></div>
+        {intro && (
+          <div className="flex flex-col gap-10 items-center text-white">
+            <img src={logo} alt="" className="h-40 w-40" />
+            <div className="flex gap-10">
+              <div className="border-2 border-[#f2e9e4]/40 h-32 w-60 flex flex-col rounded-3xl p-4 gap-1">
+                <img src={search} alt="" className="h-10 w-10" />
+                <p className="font-Inter tracking-tighter text-[#f2e9e4]/80">
+                  Find the news you want to see the event of!
+                </p>
+              </div>
+              <div className="border-2 border-[#f2e9e4]/40 h-32 w-60 flex flex-col rounded-3xl p-4 gap-1">
+                <img src={copy} alt="" className="h-10 w-10" />
+                <p className="font-Inter tracking-tighter text-[#f2e9e4]/80">
+                  Copy it to your clipboard and paste it below!
+                </p>
+              </div>
+              <div className="border-2 border-[#f2e9e4]/40 h-32 w-60 flex flex-col rounded-3xl p-4 gap-1">
+                <img src={check} alt="" className="h-10 w-10" />
+                <p className="font-Inter tracking-tighter text-[#f2e9e4]/80">
+                  Hit enter and wait for the prediction to complete!
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-4">
             {inputDisplay && (
@@ -145,20 +176,15 @@ export default function Event() {
           </div>
         </div>
       </section>
-      <section className="w-1/5 flex flex-col items-start justify-between">
-        <div className="ml-14 mr-6 mt-12 z-10">
+      <section className="w-1/5 flex flex-col justify-around gap-[320px]">
+        <div className="z-10 flex justify-center">
           <Menu>
-            <MenuButton className="inline-flex items-center gap-2 rounded-full text-sm/6 font-semibold text-white shadow-inner  focus:outline-none z-10">
-              <div className="flex gap-2 items-center">
-                <h1 className="font-Inter tracking-tighter text-lg font-normal text-[#f2e9e4]">
+            <MenuButton className="inline-flex items-center gap-2 rounded-full text-sm/6 font-semibold text-white shadow-inner focus:outline-none z-10">
+              <div className="hover:bg-[#9b92b6] px-4 py-2 rounded-full">
+                <h1 className="font-Inter tracking-tighter text-lg font-normal text-[#f2e9e4] text-nowrap">
                   {localStorage.getItem("first_name")}{" "}
                   {localStorage.getItem("last_name")}
                 </h1>
-                <img
-                  src={profileimg}
-                  alt=""
-                  className="w-10 h-10 rounded-full"
-                />
               </div>
             </MenuButton>
             <Transition
@@ -217,9 +243,12 @@ export default function Event() {
             </Transition>
           </Menu>
         </div>
-        <button className="text-white bg-white ml-3 mb-7 p-3 rounded-full">
-          <img src={arrowup} alt="" />
-        </button>
+        <div></div>
+        <div className="">
+          <button className="bg-[#f2e9e4] p-3 ml-2 rounded-full">
+            <img src={question} alt="" className="h-10 w-10" />
+          </button>
+        </div>
       </section>
     </main>
   );

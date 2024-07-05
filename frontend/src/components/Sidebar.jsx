@@ -76,42 +76,70 @@ export default function Sidebar() {
                 <div className="w-5/6 flex flex-col gap-2">
                   <h2>Today</h2>
                   {groupedEntries.today.map((entry) => (
-                    <div
+                    <li
                       key={entry.created}
-                      className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#2E2E45] hover:text-[#f2e9e4] transition duration-200 ease-in-out"
+                      className={`entry ${
+                        selected === entry
+                          ? "w-85% bg-[#303064] text-[#f2e9e4] rounded-xl flex list-none"
+                          : "w-85% text-[#F2E9E4] list-none"
+                      }`}
+                      onClick={() => selectEvent(entry)}
                     >
-                      {entry.title}
-                    </div>
+                      <div className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#303064] hover:text-[#f2e9e4] transition duration-200 ease-in-out ">
+                        {entry.title}
+                      </div>
+                    </li>
                   ))}
 
                   <h2>Yesterday</h2>
                   {groupedEntries.yesterday.map((entry) => (
-                    <div
+                    <li
                       key={entry.created}
-                      className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#2E2E45] hover:text-[#f2e9e4] transition duration-200 ease-in-out"
+                      className={`entry ${
+                        selected === entry
+                          ? "w-85% bg-[#303064] text-[#f2e9e4] rounded-xl flex list-none"
+                          : "w-85% text-[#F2E9E4] list-none"
+                      }`}
+                      onClick={() => selectEvent(entry)}
                     >
-                      {entry.title}
-                    </div>
+                      <div className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#303064] hover:text-[#f2e9e4] transition duration-200 ease-in-out ">
+                        {entry.title}
+                      </div>
+                    </li>
                   ))}
 
                   <h2>Last 7 Days</h2>
                   {groupedEntries.last7Days.map((entry) => (
-                    <div
+                    <li
                       key={entry.created}
-                      className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#2E2E45] hover:text-[#f2e9e4] transition duration-200 ease-in-out"
+                      className={`entry ${
+                        selected === entry
+                          ? "w-85% bg-[#303064] text-[#f2e9e4] rounded-xl flex list-none"
+                          : "w-85% text-[#F2E9E4] list-none"
+                      }`}
+                      onClick={() => selectEvent(entry)}
                     >
-                      {entry.title}
-                    </div>
+                      <div className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#303064] hover:text-[#f2e9e4] transition duration-200 ease-in-out ">
+                        {entry.title}
+                      </div>
+                    </li>
                   ))}
 
                   <h2>Last 30 Days</h2>
                   {groupedEntries.last30Days.map((entry) => (
-                    <div
+                    <li
                       key={entry.created}
-                      className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#2E2E45] hover:text-[#f2e9e4] transition duration-200 ease-in-out"
+                      className={`entry ${
+                        selected === entry
+                          ? "w-85% bg-[#303064] text-[#f2e9e4] rounded-xl flex list-none"
+                          : "w-85% text-[#F2E9E4] list-none"
+                      }`}
+                      onClick={() => selectEvent(entry)}
                     >
-                      {entry.title}
-                    </div>
+                      <div className="font-medium font-Inter w-full rounded-xl p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#303064] hover:text-[#f2e9e4] transition duration-200 ease-in-out ">
+                        {entry.title}
+                      </div>
+                    </li>
                   ))}
                 </div>
               }
