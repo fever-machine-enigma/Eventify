@@ -12,12 +12,19 @@ import {
   MenuItem,
   MenuItems,
   Transition,
+  Button,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  DialogBackdrop,
 } from "@headlessui/react";
 import {
   CogIcon,
   ArchiveBoxIcon,
   UserCircleIcon,
   ArrowTopRightOnSquareIcon,
+  PlusCircleIcon,
+  PencilSquareIcon,
 } from "@heroicons/react/20/solid";
 
 import { useLogout } from "../hooks/useLogout";
@@ -54,6 +61,15 @@ export default function Sidebar() {
   const [summary, setSummary] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const [intro, setIntro] = useState(true);
+  let [isOpen, setIsOpen] = useState(true);
+
+  function open() {
+    setIsOpen(true);
+  }
+
+  function close() {
+    setIsOpen(false);
+  }
 
   const signout = () => {
     const success = logout();
@@ -360,7 +376,10 @@ export default function Sidebar() {
                     className="font-Inter mt-3 w-52 origin-top-right rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-white [--anchor-gap:var(--spacing-1)] focus:outline-none"
                   >
                     <MenuItem>
-                      <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-500">
+                      <button
+                        className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-500"
+                        onClick={open}
+                      >
                         <UserCircleIcon className="size-5 fill-white/30" />
                         Profile
                         <kbd className="ml-auto hidden font-Inter text-xs text-white/50 group-data-[focus]:inline">
@@ -402,6 +421,65 @@ export default function Sidebar() {
                   </MenuItems>
                 </Transition>
               </Menu>
+              <Dialog
+                open={isOpen}
+                as="div"
+                className="relative z-10 focus:outline-none"
+                onClose={close}
+              >
+                <DialogBackdrop className="fixed inset-0 bg-black/30" />
+                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                  <div className="flex min-h-full items-center justify-center p-4">
+                    <DialogPanel
+                      transition
+                      className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                    >
+                      <DialogTitle
+                        as="h3"
+                        className="text-2xl font-medium font-Inter tracking-tighter text-white mb-6"
+                      >
+                        Manage your profile
+                      </DialogTitle>
+                      <div className="flex flex-col gap-4 items-center">
+                        <div className=" relative">
+                          <img
+                            src={profileimg}
+                            alt=""
+                            className="h-32 w-32 rounded-full"
+                          />
+                          <PlusCircleIcon className="h-8 w-8 text-[#f2e9e4] rounded-full absolute bottom-1 right-1" />
+                        </div>
+                        <div className="flex gap-4 w-full">
+                          <p className="mt-2 text-sm/6 text-white/50 font-Inter tracking-tighter">
+                            First Name:
+                          </p>
+                          <input type="text" className="rounded-full " />
+                          <button className="cursor-pointer z-20">
+                            <PencilSquareIcon className="h-6 w-6 text-white" />
+                          </button>
+                        </div>
+                        <div className="flex gap-4 w-full">
+                          <p className="mt-2 text-sm/6 text-white/50 font-Inter tracking-tighter">
+                            Last Name:
+                          </p>
+                          <input type="text" className="rounded-full" />
+                          <button className="">
+                            <PencilSquareIcon className="h-6 w-6 text-white" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <Button
+                          className="inline-flex items-center gap-2 rounded-full bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700 font-Inter tracking-tighter"
+                          onClick={close}
+                        >
+                          Save
+                        </Button>
+                      </div>
+                    </DialogPanel>
+                  </div>
+                </div>
+              </Dialog>
             </div>
             <div></div>
             <div className="">
