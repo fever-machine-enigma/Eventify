@@ -1,7 +1,7 @@
 import { useAuthContext } from "./useAuthContext";
 import axios from "axios";
 
-const API_URL = "https://ghotona-api.onrender.com";
+const API_URL = "http://localhost:5000";
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext();

@@ -23,17 +23,15 @@ import question from "../assets/Question.svg";
 import arrowup from "../assets/arrow.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
-const API_URL = "https://ghotona-api.onrender.com";
+import { usePredict } from "../hooks/usePredict";
 
 export default function Event() {
   const { logout } = useLogout();
+  const { predict, error } = usePredict();
   const navigate = useNavigate();
 
   const [inputText, setInputText] = useState(null);
   const [inputDisplay, setInputDisplay] = useState(null);
-  const [outputText, setOutputText] = useState(null);
   const [outputDisplay, setOutputDisplay] = useState(null);
   const [summary, setSummary] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
@@ -48,7 +46,8 @@ export default function Event() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const user_id = localStorage.getItem("user_id");
+    const token = localStorage.getItem("token");
     setIntro(false);
     setInputDisplay(inputText);
     setOutputDisplay(null);
@@ -57,13 +56,10 @@ export default function Event() {
 
     const input = inputText;
     try {
-      const response = await axios.post(`${API_URL}/predict`, {
-        input,
-      });
+      const response = await predict(input, user_id, token);
 
-      const data = response.data;
-      setOutputDisplay(data.result);
-      setSummary(data.summary);
+      setOutputDisplay(response.result);
+      setSummary(response.summary);
       setIsLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -129,10 +125,7 @@ export default function Event() {
                   </p>
                   <p className="font-Inter text-[#f2e9e4] flex gap-2">
                     <span className="font-bold">Summary : </span>
-                    {summary &&
-                      summary.map((item, index) => (
-                        <p key={index}>{item.summary_text}</p>
-                      ))}
+                    {summary}
                   </p>
                 </div>
               </div>
