@@ -22,9 +22,9 @@ export default function Login() {
       <img src={logobg} alt="" className="absolute" />
 
       <main className="pb-4 pt-12 px-60 min-h-screen flex flex-col justify-center">
-        <div id="logo" className="">
-          <Link to={"/"}>
-            <img src={logoimg} alt="logo" className="w-1/6 z-10" />
+        <div id="logo" className="cursor-pointer">
+          <Link to={"/"} className="z-20 cursor-pointer">
+            <img src={logoimg} alt="logo" className="w-1/6 " />
           </Link>
         </div>
         <div
@@ -68,7 +68,7 @@ export default function Login() {
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
-                className="styled-checkbox h-5 w-5 rounded-full text-indigo-600"
+                className="h-5 w-5 rounded-full text-indigo-600"
               />
               <span className="ml-2 text-gray-700 text-lg font-Inter tracking-tighter">
                 Remember Me
@@ -76,11 +76,20 @@ export default function Login() {
             </label>
 
             <button
-              className="font-Inter bg-[#4A4E69] text-2xl w-1/2 text-[#F2E9E4] text-center p-3 rounded-full cursor-pointer"
+              className="font-Inter bg-[#4A4E69] text-2xl w-1/2 text-[#F2E9E4] text-center p-3 rounded-full cursor-pointer disabled:bg-[#D9D9D9] disabled:ring-2 disabled:ring-[#D9D9D9] disabled:h-14 disabled:w-14 flex justify-center items-center"
               type="submit"
               disabled={isLoading}
             >
-              {isLoading ? "loading..." : "Login"}
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <div class="relative">
+                    <div class="h-8 w-8 rounded-full border-t-4 border-b-4 border-gray-200"></div>
+                    <div class="absolute top-0 left-0 h-8 w-8 rounded-full border-t-4 border-b-4 border-[#373794] animate-spin"></div>
+                  </div>
+                </div>
+              ) : (
+                "Login"
+              )}
             </button>
 
             <p className="tracking-tight text-lg">
@@ -95,7 +104,7 @@ export default function Login() {
         </div>
         <footer>
           <p className="font-Inter text-md text-center font-regular text-[#F2E9E4] tracking-tight">
-            &copy; 2024 Ghotona Chitro. All Rights Reserved
+            &copy; 2024 ঘটনাচিত্র. All Rights Reserved
           </p>
         </footer>
       </main>

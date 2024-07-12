@@ -35,7 +35,7 @@ import search from "../assets/File_dock_search_fill.svg";
 import copy from "../assets/Copy.svg";
 import question from "../assets/Question.svg";
 import arrowup from "../assets/arrow.svg";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { usePredict } from "../hooks/usePredict";
 
 export default function Sidebar() {
@@ -61,7 +61,7 @@ export default function Sidebar() {
   const [summary, setSummary] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const [intro, setIntro] = useState(true);
-  let [isOpen, setIsOpen] = useState(true);
+  let [isOpen, setIsOpen] = useState(false);
 
   function open() {
     setIsOpen(true);
@@ -74,7 +74,7 @@ export default function Sidebar() {
   const signout = () => {
     const success = logout();
     if (success) {
-      navigate("/login");
+      navigate("/");
     }
   };
 
@@ -141,8 +141,10 @@ export default function Sidebar() {
 
     return groupedEntries;
   };
-  const selectEvent = (event) => {
-    setSelected(event);
+  const selectEvent = (entry) => {
+    setIntro(false);
+    setInputDisplay(entry.corpus);
+    setOutputDisplay(entry.event);
   };
   const handleNewEvent = () => {
     setIntro(true);
@@ -152,17 +154,17 @@ export default function Sidebar() {
   };
 
   return (
-    <main className="min-h-screen flex w-full gap-80">
-      <div className="bg-[#23202C] w-1/5">
+    <main className="flex">
+      <div className="bg-[#23202C] w-1/6 fixed">
         <div className="flex flex-col h-screen justify-between items-center">
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2 overflow-auto">
             <div className="w-3/4">
               <img src={logoimg} className="" />
             </div>
             <hr className="w-5/6" />
-            <div className="w-full text-white font-Inter tracking-tighter ml-10">
+            <div className="w-5/6 text-white font-Inter tracking-tighter overflow-auto scrollbar-custom">
               {
-                <div className="w-5/6 flex flex-col gap-2">
+                <div className="w-5/6 flex flex-col gap-2 ">
                   <h2>Today</h2>
                   {groupedEntries.today.map((entry) => (
                     <li
@@ -172,7 +174,10 @@ export default function Sidebar() {
                           ? "w-85% bg-[#303064] text-[#f2e9e4] rounded-full flex list-none"
                           : "w-85% text-[#F2E9E4] list-none"
                       }`}
-                      onClick={() => selectEvent(entry)}
+                      onClick={() => {
+                        selectEvent(entry);
+                        selectEvent(entry);
+                      }}
                     >
                       <div className="font-medium font-Inter w-full rounded-full p-2 flex gap-4 items-center justify-between cursor-pointer truncate hover:bg-[#303064] hover:text-[#f2e9e4] transition duration-200 ease-in-out ">
                         {entry.title}
@@ -246,249 +251,256 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-      <div className="w-5/6">
-        <main className="w-full flex">
-          <section className="w-4/5 h-screen flex flex-col justify-between gap-20">
-            <div className=""></div>
-            {intro && (
-              <div className="flex flex-col gap-10 items-center text-white">
-                <img src={logo} alt="" className="h-40 w-40" />
-                <div className="flex gap-10">
-                  <div className="border-2 border-[#f2e9e4]/40 h-32 w-60 flex flex-col rounded-3xl p-4 gap-1">
-                    <img src={search} alt="" className="h-10 w-10" />
-                    <p className="font-Inter tracking-tighter text-[#f2e9e4]/80">
-                      Find the news you want to see the event of!
-                    </p>
-                  </div>
-                  <div className="border-2 border-[#f2e9e4]/40 h-32 w-60 flex flex-col rounded-3xl p-4 gap-1">
-                    <img src={copy} alt="" className="h-10 w-10" />
-                    <p className="font-Inter tracking-tighter text-[#f2e9e4]/80">
-                      Copy it to your clipboard and paste it below!
-                    </p>
-                  </div>
-                  <div className="border-2 border-[#f2e9e4]/40 h-32 w-60 flex flex-col rounded-3xl p-4 gap-1">
-                    <img src={check} alt="" className="h-10 w-10" />
-                    <p className="font-Inter tracking-tighter text-[#f2e9e4]/80">
-                      Hit enter and wait for the prediction to complete!
-                    </p>
-                  </div>
+      <div className="w-1/6"></div>
+      <div className="w-5/6 h-screen flex flex-col justify-between items-center">
+        <div className="h-14 flex justify-between mr-10 items-center w-full">
+          <div className=""></div>
+          <div className="z-10 flex justify-center mt-6">
+            <Menu>
+              <MenuButton className="inline-flex items-center gap-2 rounded-full text-sm/6 font-semibold text-white shadow-inner focus:outline-none z-10">
+                <div className="hover:bg-[#9b92b6] px-4 py-2 rounded-full">
+                  <h1 className="font-Inter tracking-tighter text-lg font-normal text-[#f2e9e4] text-nowrap">
+                    {localStorage.getItem("first_name")}{" "}
+                    {localStorage.getItem("last_name")}
+                  </h1>
                 </div>
-              </div>
-            )}
-            <div className="flex flex-col gap-10">
-              <div className="flex flex-col gap-4">
-                {inputDisplay && (
-                  <div className="flex flex-col gap-4">
-                    <div className="flex gap-4 items-center">
-                      <img
-                        src={profileimg}
-                        className="w-10 h-10 rounded-full"
-                      />
-                      <h4 className="text-lg text-[#f2e9e4] font-Inter">You</h4>
-                    </div>
-                    <div>
-                      <p className="font-Inter text-[#f2e9e4] ml-14">
-                        {inputDisplay}
-                      </p>
-                    </div>
-                  </div>
-                )}
-                {outputDisplay ? (
-                  <div className="flex flex-col gap-4">
-                    <div className="flex gap-4 items-center">
-                      <img src={logo} className="w-10 h-10 rounded-full" />
-                      <h4 className="text-lg text-[#f2e9e4] font-Inter">
-                        Ghotona Chitro
-                      </h4>
-                    </div>
-                    <div className="flex flex-col gap-4 ml-14">
-                      <p className="font-Inter text-[#f2e9e4]">
-                        <span className="font-bold">Event : </span>
-                        {outputDisplay}
-                      </p>
-                      <p className="font-Inter text-[#f2e9e4] flex gap-2">
-                        <span className="font-bold">Summary : </span>
-                        {summary}
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  isLoading && (
-                    <div className="flex flex-col gap-4">
-                      <div className="flex gap-4 items-center">
-                        <img src={logo} className="w-10 h-10 rounded-full" />
-                        <h4 className="text-lg text-[#f2e9e4] font-Inter">
-                          Ghotona Chitro
-                        </h4>
-                      </div>
-                      <div className="ml-10">
-                        <div class="flex space-x-2 justify-center items-center w-20 h-20dark:invert">
-                          <span class="sr-only">Loading...</span>
-                          <div class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                          <div class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                          <div class="h-2 w-2 bg-white rounded-full animate-bounce"></div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                )}
-              </div>
-
-              <div className="w-full mb-6">
-                <form className="relative">
-                  <input
-                    type="text"
-                    placeholder="Enter your news here...."
-                    className="w-full p-6 rounded-full bg-black/0 ring-2 ring-[#f2e9e4] text-[#f2e9e4] font-Inter tracking-tight"
-                    onChange={(e) => setInputText(e.target.value)}
-                  />
-                  <button
-                    className="absolute right-1 bottom-1 bg-[#f2e9e4] hover:bg-[#dad1cd] rounded-full h-16 w-16 flex items-center justify-center"
-                    onClick={handleSubmit}
-                  >
-                    <img src={arrowup} alt="" />
-                  </button>
-                </form>
-              </div>
-            </div>
-          </section>
-          <section className="w-1/5 flex flex-col justify-around gap-[320px]">
-            <div className="z-10 flex justify-center">
-              <Menu>
-                <MenuButton className="inline-flex items-center gap-2 rounded-full text-sm/6 font-semibold text-white shadow-inner focus:outline-none z-10">
-                  <div className="hover:bg-[#9b92b6] px-4 py-2 rounded-full">
-                    <h1 className="font-Inter tracking-tighter text-lg font-normal text-[#f2e9e4] text-nowrap">
-                      {localStorage.getItem("first_name")}{" "}
-                      {localStorage.getItem("last_name")}
-                    </h1>
-                  </div>
-                </MenuButton>
-                <Transition
-                  enter="transition ease-out duration-75"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="transition ease-in duration-100"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <MenuItems
-                    anchor="bottom end"
-                    className="font-Inter mt-3 w-52 origin-top-right rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-white [--anchor-gap:var(--spacing-1)] focus:outline-none"
-                  >
-                    <MenuItem>
-                      <button
-                        className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-500"
-                        onClick={open}
-                      >
-                        <UserCircleIcon className="size-5 fill-white/30" />
-                        Profile
-                        <kbd className="ml-auto hidden font-Inter text-xs text-white/50 group-data-[focus]:inline">
-                          P
-                        </kbd>
-                      </button>
-                    </MenuItem>
-                    <MenuItem>
-                      <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-500">
-                        <ArchiveBoxIcon className="size-5 fill-white/30" />
-                        Archive
-                        <kbd className="ml-auto hidden font-Inter text-xs text-white/50 group-data-[focus]:inline">
-                          A
-                        </kbd>
-                      </button>
-                    </MenuItem>
-                    <MenuItem>
-                      <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-500">
-                        <CogIcon className="size-5 fill-white/30" />
-                        Settings
-                        <kbd className="ml-auto hidden font-Inter text-xs text-white/50 group-data-[focus]:inline">
-                          S
-                        </kbd>
-                      </button>
-                    </MenuItem>
-                    <div className="my-1 h-px bg-white/5" />
-                    <MenuItem>
-                      <button
-                        className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-red-500"
-                        onClick={signout}
-                      >
-                        <ArrowTopRightOnSquareIcon className="size-5 fill-white/30 hover:fill-black" />
-                        Log out
-                        <kbd className="ml-auto hidden font-Inter text-xs text-white/50 group-data-[focus]:inline">
-                          L
-                        </kbd>
-                      </button>
-                    </MenuItem>
-                  </MenuItems>
-                </Transition>
-              </Menu>
-              <Dialog
-                open={isOpen}
-                as="div"
-                className="relative z-10 focus:outline-none"
-                onClose={close}
+              </MenuButton>
+              <Transition
+                enter="transition ease-out duration-75"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
               >
-                <DialogBackdrop className="fixed inset-0 bg-black/30" />
-                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                  <div className="flex min-h-full items-center justify-center p-4">
-                    <DialogPanel
-                      transition
-                      className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                <MenuItems
+                  anchor="bottom end"
+                  className="font-Inter mt-3 w-52 origin-top-right rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-white [--anchor-gap:var(--spacing-1)] focus:outline-none"
+                >
+                  <MenuItem>
+                    <button
+                      className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-500"
+                      onClick={open}
                     >
-                      <DialogTitle
-                        as="h3"
-                        className="text-2xl font-medium font-Inter tracking-tighter text-white mb-6"
+                      <UserCircleIcon className="size-5 fill-white/30" />
+                      Profile
+                      <kbd className="ml-auto hidden font-Inter text-xs text-white/50 group-data-[focus]:inline">
+                        P
+                      </kbd>
+                    </button>
+                  </MenuItem>
+                  <MenuItem>
+                    <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-500">
+                      <ArchiveBoxIcon className="size-5 fill-white/30" />
+                      Archive
+                      <kbd className="ml-auto hidden font-Inter text-xs text-white/50 group-data-[focus]:inline">
+                        A
+                      </kbd>
+                    </button>
+                  </MenuItem>
+                  <MenuItem>
+                    <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-500">
+                      <CogIcon className="size-5 fill-white/30" />
+                      Settings
+                      <kbd className="ml-auto hidden font-Inter text-xs text-white/50 group-data-[focus]:inline">
+                        S
+                      </kbd>
+                    </button>
+                  </MenuItem>
+                  <div className="my-1 h-px bg-white/5" />
+                  <MenuItem>
+                    <button
+                      className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-red-500"
+                      onClick={signout}
+                    >
+                      <ArrowTopRightOnSquareIcon className="size-5 fill-white/30 hover:fill-black" />
+                      Log out
+                      <kbd className="ml-auto hidden font-Inter text-xs text-white/50 group-data-[focus]:inline">
+                        L
+                      </kbd>
+                    </button>
+                  </MenuItem>
+                </MenuItems>
+              </Transition>
+            </Menu>
+            <Dialog
+              open={isOpen}
+              as="div"
+              className="relative z-10 focus:outline-none"
+              onClose={close}
+            >
+              <DialogBackdrop className="fixed inset-0 bg-black/30" />
+              <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div className="flex min-h-full items-center justify-center p-4">
+                  <DialogPanel
+                    transition
+                    className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+                  >
+                    <DialogTitle
+                      as="h3"
+                      className="text-2xl font-medium font-Inter tracking-tighter text-white mb-6"
+                    >
+                      Manage your profile
+                    </DialogTitle>
+                    <div className="flex flex-col gap-4 items-center">
+                      <div className=" relative">
+                        <img
+                          src={profileimg}
+                          alt=""
+                          className="h-32 w-32 rounded-full"
+                        />
+                        <PlusCircleIcon className="h-8 w-8 text-[#f2e9e4] rounded-full absolute bottom-1 right-1" />
+                      </div>
+                      <div className="flex gap-4 w-full">
+                        <p className="mt-2 text-sm/6 text-white/50 font-Inter tracking-tighter">
+                          First Name:
+                        </p>
+                        <input type="text" className="rounded-full " />
+                        <button className="cursor-pointer z-20">
+                          <PencilSquareIcon className="h-6 w-6 text-white" />
+                        </button>
+                      </div>
+                      <div className="flex gap-4 w-full">
+                        <p className="mt-2 text-sm/6 text-white/50 font-Inter tracking-tighter">
+                          Last Name:
+                        </p>
+                        <input type="text" className="rounded-full" />
+                        <button className="">
+                          <PencilSquareIcon className="h-6 w-6 text-white" />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <Button
+                        className="inline-flex items-center gap-2 rounded-full bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700 font-Inter tracking-tighter"
+                        onClick={close}
                       >
-                        Manage your profile
-                      </DialogTitle>
-                      <div className="flex flex-col gap-4 items-center">
-                        <div className=" relative">
-                          <img
-                            src={profileimg}
-                            alt=""
-                            className="h-32 w-32 rounded-full"
-                          />
-                          <PlusCircleIcon className="h-8 w-8 text-[#f2e9e4] rounded-full absolute bottom-1 right-1" />
-                        </div>
-                        <div className="flex gap-4 w-full">
-                          <p className="mt-2 text-sm/6 text-white/50 font-Inter tracking-tighter">
-                            First Name:
-                          </p>
-                          <input type="text" className="rounded-full " />
-                          <button className="cursor-pointer z-20">
-                            <PencilSquareIcon className="h-6 w-6 text-white" />
-                          </button>
-                        </div>
-                        <div className="flex gap-4 w-full">
-                          <p className="mt-2 text-sm/6 text-white/50 font-Inter tracking-tighter">
-                            Last Name:
-                          </p>
-                          <input type="text" className="rounded-full" />
-                          <button className="">
-                            <PencilSquareIcon className="h-6 w-6 text-white" />
-                          </button>
-                        </div>
-                      </div>
-                      <div className="mt-4">
-                        <Button
-                          className="inline-flex items-center gap-2 rounded-full bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700 font-Inter tracking-tighter"
-                          onClick={close}
-                        >
-                          Save
-                        </Button>
-                      </div>
-                    </DialogPanel>
-                  </div>
+                        Save
+                      </Button>
+                    </div>
+                  </DialogPanel>
                 </div>
-              </Dialog>
+              </div>
+            </Dialog>
+          </div>
+        </div>
+        <div className="h-auto flex z-10 overflow-auto">
+          <div className="mx-40">
+            <div className="flex">
+              <div className="flex w-full">
+                <section className="flex flex-col justify-between gap-20 w-full">
+                  {intro && (
+                    <div className="flex flex-col gap-10 items-center text-white">
+                      <img src={logo} alt="" className="h-40 w-40" />
+                      <div className="flex gap-10">
+                        <div className="border-2 border-[#f2e9e4]/40 h-32 w-60 flex flex-col rounded-3xl p-4 gap-1">
+                          <img src={search} alt="" className="h-10 w-10" />
+                          <p className="font-Inter tracking-tighter text-[#f2e9e4]/80">
+                            Find the news you want to see the event of!
+                          </p>
+                        </div>
+                        <div className="border-2 border-[#f2e9e4]/40 h-32 w-60 flex flex-col rounded-3xl p-4 gap-1">
+                          <img src={copy} alt="" className="h-10 w-10" />
+                          <p className="font-Inter tracking-tighter text-[#f2e9e4]/80">
+                            Copy it to your clipboard and paste it below!
+                          </p>
+                        </div>
+                        <div className="border-2 border-[#f2e9e4]/40 h-32 w-60 flex flex-col rounded-3xl p-4 gap-1">
+                          <img src={check} alt="" className="h-10 w-10" />
+                          <p className="font-Inter tracking-tighter text-[#f2e9e4]/80">
+                            Hit enter and wait for the prediction to complete!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex flex-col gap-10 overflow-hidden">
+                    <div className="flex flex-col gap-4 ">
+                      {inputDisplay && (
+                        <div className="flex flex-col gap-4">
+                          <div className="flex gap-4 items-center">
+                            <img
+                              src={profileimg}
+                              className="w-10 h-10 rounded-full"
+                            />
+                            <h4 className="text-lg text-[#f2e9e4] font-Inter">
+                              You
+                            </h4>
+                          </div>
+                          <div>
+                            <p className="font-Inter text-[#f2e9e4] ml-14">
+                              {inputDisplay}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      {outputDisplay ? (
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center">
+                            <img src={logo} className="w-14 h-14" />
+                            <h4 className="text-lg text-[#f2e9e4] font-Inter mt-2">
+                              Ghotona Chitro
+                            </h4>
+                          </div>
+                          <div className="flex flex-col gap-4 ml-14">
+                            <p className="font-Inter text-[#f2e9e4]">
+                              <span className="font-bold">Event: </span>
+                              {outputDisplay}
+                            </p>
+                            <p className="font-Inter text-[#f2e9e4] flex gap-2">
+                              <span className="font-bold">Summary: </span>
+                              {summary}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        isLoading && (
+                          <div className="flex flex-col gap-4">
+                            <div className="flex gap-4 items-center">
+                              <img
+                                src={logo}
+                                className="w-10 h-10 rounded-full"
+                              />
+                              <h4 className="text-lg text-[#f2e9e4] font-Inter">
+                                Ghotona Chitro
+                              </h4>
+                            </div>
+                            <div className="ml-10">
+                              <div class="flex space-x-2 justify-center items-center w-20 h-20 dark:invert">
+                                <span class="sr-only">Loading...</span>
+                                <div class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                                <div class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                                <div class="h-2 w-2 bg-white rounded-full animate-bounce"></div>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+                </section>
+              </div>
             </div>
-            <div></div>
-            <div className="">
-              <button className="bg-[#f2e9e4] p-3 ml-2 rounded-full">
-                <img src={question} alt="" className="h-10 w-10" />
+          </div>
+        </div>
+        <div className="w-full h-36 flex justify-center">
+          <div className="h-auto w-2/4 fixed bottom-4">
+            <form className="relative">
+              <input
+                type="text"
+                placeholder="Enter your news here...."
+                className="w-full p-6 rounded-full bg-black/0 ring-2 ring-[#f2e9e4] text-[#f2e9e4] font-Inter tracking-tight"
+                onChange={(e) => setInputText(e.target.value)}
+              />
+              <button
+                className="absolute right-1 bottom-1 bg-[#f2e9e4] hover:bg-[#dad1cd] rounded-full h-16 w-16 flex items-center justify-center"
+                onClick={handleSubmit}
+              >
+                <img src={arrowup} alt="" />
               </button>
-            </div>
-          </section>
-        </main>
+            </form>
+          </div>
+        </div>
       </div>
     </main>
   );

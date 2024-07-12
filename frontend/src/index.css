@@ -44,3 +44,48 @@
   /* Show the checkmark when checkbox is checked */
   opacity: 1;
 }
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 15px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  @apply bg-gray-200; /* Apply Tailwind background color */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  @apply bg-blue-500 rounded; /* Apply Tailwind background color and rounded corners */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  @apply bg-blue-700; /* Apply Tailwind background color on hover */
+}
+
+/* For Firefox */
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #b0b0e4 #303064; /* Thumb color and track color */
+}
+
+html::-webkit-scrollbar {
+  width: 16px; /* Change this value to make the scrollbar thicker */
+  height: 16px; /* For horizontal scrollbar */
+}
+
+html::-webkit-scrollbar-track {
+  @apply bg-gray-200; /* Apply Tailwind background color */
+}
+
+html::-webkit-scrollbar-thumb {
+  @apply bg-blue-500 rounded; /* Apply Tailwind background color and rounded corners */
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  @apply bg-blue-200; /* Apply Tailwind background color on hover */
+}
+
+/* Custom scrollbar styles for Firefox */
+html {
+  scrollbar-width: auto; /* Can be 'auto', 'thin', or a specific size */
+  scrollbar-color: #c9c9d3 #303064; /* Thumb color and track color */
+}

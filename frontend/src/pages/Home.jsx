@@ -5,12 +5,9 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const { dispatch } = useAuthContext();
-  const navigate = useNavigate();
-
   return (
-    <body className="bg-[#22223B] relative min-h-screen overflow-hidden">
-      <img src={logobg} className="absolute right-0" />
+    <body className="bg-[#22223B] relative overflow-hidden">
+      <img src={logobg} className="absolute h-auto left-52 -top-60" />
       <main className="">
         <Sidebar />
       </main>
