@@ -23,7 +23,7 @@ const Register = () => {
       confirm_password
     );
     if (success) {
-      navigate("/login");
+      navigate("/");
     }
   };
 

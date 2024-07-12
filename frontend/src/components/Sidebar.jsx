@@ -11,17 +11,26 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
+  MenuSeparator,
   Transition,
   Button,
   Dialog,
   DialogPanel,
   DialogTitle,
   DialogBackdrop,
+  Switch,
 } from "@headlessui/react";
 import {
   CogIcon,
   ArchiveBoxIcon,
   UserCircleIcon,
+  UserIcon,
+  FireIcon,
+  BeakerIcon,
+  CubeTransparentIcon,
+  CpuChipIcon,
+  SparklesIcon,
+  ChevronDownIcon,
   ArrowTopRightOnSquareIcon,
   PlusCircleIcon,
   PencilSquareIcon,
@@ -49,6 +58,7 @@ export default function Sidebar() {
   const [selected, setSelected] = useState(null);
   const { fetchLog } = useEventLog();
   const [clear, setClear] = useState();
+  const [enabled, setEnabled] = useState(false);
 
   // Event Window
   const { logout } = useLogout();
@@ -145,6 +155,7 @@ export default function Sidebar() {
     setIntro(false);
     setInputDisplay(entry.corpus);
     setOutputDisplay(entry.event);
+    setSummary(entry.summary);
   };
   const handleNewEvent = () => {
     setIntro(true);
@@ -164,15 +175,15 @@ export default function Sidebar() {
             <hr className="w-5/6" />
             <div className="w-5/6 text-white font-Inter tracking-tighter overflow-auto scrollbar-custom">
               {
-                <div className="w-5/6 flex flex-col gap-2 ">
+                <div className="w-6/7 flex flex-col gap-2 ">
                   <h2>Today</h2>
                   {groupedEntries.today.map((entry) => (
                     <li
                       key={entry.created}
                       className={`entry ${
                         selected === entry
-                          ? "w-85% bg-[#303064] text-[#f2e9e4] rounded-full flex list-none"
-                          : "w-85% text-[#F2E9E4] list-none"
+                          ? "w-full bg-[#303064] text-[#f2e9e4] rounded-full flex list-none"
+                          : "w-full text-[#F2E9E4] list-none"
                       }`}
                       onClick={() => {
                         selectEvent(entry);
@@ -253,12 +264,82 @@ export default function Sidebar() {
       </div>
       <div className="w-1/6"></div>
       <div className="w-5/6 h-screen flex flex-col justify-between items-center">
-        <div className="h-14 flex justify-between mr-10 items-center w-full">
-          <div className=""></div>
-          <div className="z-10 flex justify-center mt-6">
+        <div className="h-14  flex justify-between mr-10 items-center w-[1550px] mt-4">
+          <div className="ml-4 z-10">
+            <Menu>
+              <MenuButton className="flex items-center gap-1 rounded-md text-[#f2e9e4] text-xl p-2 font-Inter tracking-tighter font-semibold shadow-inner hover:bg-[#35355c]">
+                ঘটনাচিত্র
+                <ChevronDownIcon className="size-4 fill-white/60" />
+              </MenuButton>
+              <MenuItems
+                transition
+                anchor="bottom start"
+                className="font-Inter mt-2 w-80 origin-center rounded-xl border border-white/5 bg-[#2c2c47] p-1 text-sm/6 text-white [--anchor-gap:var(--spacing-1)] focus:outline-none z-10"
+              >
+                <MenuItem>
+                  <button className="group flex w-full items-center gap-4 rounded-lg p-4 data-[focus]:bg-white/10">
+                    <FireIcon className="size-8 fill-white/30" />
+                    <div className="flex flex-col items-start text-nowrap">
+                      <p className="font-bold">
+                        Transformer (Work In Progress)
+                      </p>
+                      <p className="">Our smartest model yet!</p>
+                    </div>
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="group flex w-full items-center gap-4 rounded-lg p-4 data-[focus]:bg-white/10">
+                    <SparklesIcon className="size-8 fill-white/30" />
+                    <div className="flex flex-col items-start text-nowrap">
+                      <p className="font-bold">CNN (Recommended)</p>
+                      <p className="">Great for everyday uses.</p>
+                    </div>
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="group flex w-full items-center gap-4 rounded-lg p-4 data-[focus]:bg-white/10">
+                    <CubeTransparentIcon className="size-8 fill-white/30" />
+                    <div className="flex flex-col items-start text-nowrap">
+                      <p className="font-bold">Bi-directional LSTM</p>
+                      <p className="">Works just as well.</p>
+                    </div>
+                  </button>
+                </MenuItem>
+                <MenuItem>
+                  <button className="group flex w-full items-center gap-4 rounded-lg p-4 data-[focus]:bg-white/10">
+                    <CpuChipIcon className="size-8 fill-white/30" />
+                    <div className="flex flex-col items-start text-nowrap">
+                      <p className="font-bold">LSTM</p>
+                      <p className="">First model we ever worked on.</p>
+                    </div>
+                  </button>
+                </MenuItem>
+                <MenuSeparator className="my-1 h-px bg-[#6c6c99]" />
+                <MenuItem>
+                  <div className="group flex w-full items-center gap-4 rounded-lg p-4 data-[focus]:bg-white/10">
+                    <UserIcon className="size-8 fill-white/30" />
+                    <div className="flex  items-start text-nowrap gap-14">
+                      <p className="font-bold">Turn on Incognito</p>
+                      <Switch
+                        checked={enabled}
+                        onChange={setEnabled}
+                        className="group relative flex h-7 w-14 cursor-pointer rounded-full bg-white/10 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-white/10"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none inline-block size-5 translate-x-0 rounded-full bg-white ring-0 shadow-lg transition duration-200 ease-in-out group-data-[checked]:translate-x-7"
+                        />
+                      </Switch>
+                    </div>
+                  </div>
+                </MenuItem>
+              </MenuItems>
+            </Menu>
+          </div>
+          <div className="z-10 flex justify-center">
             <Menu>
               <MenuButton className="inline-flex items-center gap-2 rounded-full text-sm/6 font-semibold text-white shadow-inner focus:outline-none z-10">
-                <div className="hover:bg-[#9b92b6] px-4 py-2 rounded-full">
+                <div className="hover:bg-[#35355c] px-4 py-2 rounded-full">
                   <h1 className="font-Inter tracking-tighter text-lg font-normal text-[#f2e9e4] text-nowrap">
                     {localStorage.getItem("first_name")}{" "}
                     {localStorage.getItem("last_name")}
@@ -275,7 +356,7 @@ export default function Sidebar() {
               >
                 <MenuItems
                   anchor="bottom end"
-                  className="font-Inter mt-3 w-52 origin-top-right rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-white [--anchor-gap:var(--spacing-1)] focus:outline-none"
+                  className="font-Inter mt-3 w-52 origin-top-right rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-white [--anchor-gap:var(--spacing-1)] focus:outline-none z-10"
                 >
                   <MenuItem>
                     <button
@@ -465,13 +546,14 @@ export default function Sidebar() {
                                 Ghotona Chitro
                               </h4>
                             </div>
-                            <div className="ml-10">
-                              <div class="flex space-x-2 justify-center items-center w-20 h-20 dark:invert">
-                                <span class="sr-only">Loading...</span>
-                                <div class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                                <div class="h-2 w-2 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                                <div class="h-2 w-2 bg-white rounded-full animate-bounce"></div>
-                              </div>
+                            <div
+                              className="ml-10 mt-4 animate-bounce flex flex-col gap-4"
+                              role="status"
+                            >
+                              <div class="h-2.5 bg-gray-200 rounded-full dark:bg-[#61619b] w-1/2 ml-4 animate-pulse"></div>
+                              <div class="h-2.5  bg-gray-200 rounded-full dark:bg-[#61619b] w-full ml-4 animate-pulse"></div>
+                              <div class="h-2.5  bg-gray-200 rounded-full dark:bg-[#61619b] w-3/4 ml-4 animate-pulse"></div>
+                              <div class="h-2.5  bg-gray-200 rounded-full dark:bg-[#61619b] w-1/3 ml-4 animate-pulse"></div>
                             </div>
                           </div>
                         )
