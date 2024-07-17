@@ -14,7 +14,7 @@ export const useEventLog = () => {
     setError(null);
     try {
       const response = await axios.post(
-        `${API_URL}/fetch-log`,
+        `${API_URL}/fetchlog`,
         { user_id },
         {
           headers: {

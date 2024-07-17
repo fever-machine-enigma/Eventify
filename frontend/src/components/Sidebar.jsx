@@ -69,6 +69,9 @@ export default function Sidebar() {
   const [inputDisplay, setInputDisplay] = useState(null);
   const [outputDisplay, setOutputDisplay] = useState(null);
   const [summary, setSummary] = useState(null);
+  const [people, setPeople] = useState(null);
+  const [locations, setLocations] = useState(null);
+  const [orgs, setOrgs] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const [intro, setIntro] = useState(true);
   let [isOpen, setIsOpen] = useState(false);
@@ -108,6 +111,9 @@ export default function Sidebar() {
     setInputDisplay(inputText);
     setOutputDisplay(null);
     setSummary(null);
+    setPeople(null);
+    setLocations(null);
+    setOrgs(null);
     setIsLoading(true);
 
     const input = inputText;
@@ -116,6 +122,9 @@ export default function Sidebar() {
 
       setOutputDisplay(response.result);
       setSummary(response.summary);
+      setPeople(response.people);
+      setLocations(response.locations);
+      setOrgs(response.organizations);
       setIsLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -162,6 +171,9 @@ export default function Sidebar() {
     setInputDisplay(null);
     setOutputDisplay(null);
     setSummary(null);
+    setPeople(null);
+    setLocations(null);
+    setOrgs(null);
   };
 
   return (
@@ -532,6 +544,18 @@ export default function Sidebar() {
                               <span className="font-bold">Summary: </span>
                               {summary}
                             </p>
+                            <p className="font-Inter text-[#f2e9e4] flex gap-2">
+                              <span className="font-bold">People: </span>
+                              {people}
+                            </p>
+                            <p className="font-Inter text-[#f2e9e4] flex gap-2">
+                              <span className="font-bold">Organizations: </span>
+                              {orgs}
+                            </p>
+                            <p className="font-Inter text-[#f2e9e4] flex gap-2">
+                              <span className="font-bold">Locations: </span>
+                              {locations}
+                            </p>
                           </div>
                         </div>
                       ) : (
@@ -547,7 +571,7 @@ export default function Sidebar() {
                               </h4>
                             </div>
                             <div
-                              className="ml-10 mt-4 animate-bounce flex flex-col gap-4"
+                              className="ml-10 mt-4 flex flex-col gap-4"
                               role="status"
                             >
                               <div class="h-2.5 bg-gray-200 rounded-full dark:bg-[#61619b] w-1/2 ml-4 animate-pulse"></div>
